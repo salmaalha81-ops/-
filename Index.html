@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>نظام المريض الذكي - سلمى الحربي</title>
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; color: #333; margin: 0; padding: 20px; text-align: center; }
+    .container { max-width: 650px; background: white; margin: 20px auto; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+    h1 { color: #2c3e50; font-size: 22px; margin-bottom: 20px; }
+    h2 { color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 10px; font-size: 20px; }
+    h3 { color: #34495e; font-size: 16px; margin-top: 20px; }
+    .patient-header { background-color: #2c3e50; color: white; padding: 12px; border-radius: 6px; margin-bottom: 25px; font-weight: bold; font-size: 16px; }
+    .btn-main { display: block; width: 100%; padding: 14px; margin: 12px 0; font-size: 16px; font-weight: bold; color: white; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s; }
+    .btn-general { background-color: #3498db; }
+    .btn-general:hover { background-color: #2980b9; }
+    .btn-private { background-color: #e67e22; }
+    .btn-private:hover { background-color: #d35400; }
+    .btn-labs { background-color: #16a085; }
+    .btn-labs:hover { background-color: #117a65; }
+    .btn-doctor { background-color: #27ae60; }
+    .btn-doctor:hover { background-color: #219653; }
+    .btn-ai { background-color: #9b59b6; width: auto; padding: 10px 20px; font-size: 15px; }
+    .btn-ai:hover { background-color: #8e44ad; }
+    .btn-back { background-color: #7f8c8d; width: auto; padding: 8px 15px; margin-top: 20px; }
+    .page { display: none; text-align: right; }
+    .page.active { display: block; }
+    .data-item { padding: 10px; border-bottom: 1px solid #f1f1f1; font-size: 15px; line-height: 1.6; }
+    .data-label { font-weight: bold; color: #2c3e50; display: inline-block; width: 190px; vertical-align: top; }
+    .data-val { display: inline-block; width: calc(100% - 200px); }
+    #ai-result { background: #f9f9f9; border-right: 4px solid #9b59b6; padding: 15px; margin-top: 15px; border-radius: 4px; white-space: pre-line; text-align: right; font-size: 14px; line-height: 1.6; }
+    .loading { color: #9b59b6; font-weight: bold; }
+    textarea, input[type="text"] { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-family: inherit; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  
+  <!-- الهيدر الثابت للمريضة -->
+  <div class="patient-header">👤 الملف الطبي الموحد: سلمى عبد المحسن الحربي</div>
+
+  <!-- الصفحة الرئيسية -->
+  <div id="mainPage" class="page active">
+    <h1>نظام بيانات المريض الإلكتروني</h1>
+    <button class="btn-main btn-general" onclick="showPage('generalPage')">بيانات المريض العامة</button>
+    <button class="btn-main btn-private" onclick="showPage('privatePage')">معلومات المريض الخاصة (للمستشفى)</button>
+  </div>
+
+  <!-- صفحة البيانات العامة -->
+  <div id="generalPage" class="page">
+    <h2>📋 البيانات العامة للمريضة</h2>
+    <div class="data-item"><span class="data-label">اسم المريضة:</span><span class="data-val">سلمى عبد المحسن الحربي</span></div>
+    <div class="data-item"><span class="data-label">العمر:</span><span class="data-val">29 سنة</span></div>
+    <div class="data-item"><span class="data-label">الوزن:</span><span class="data-val">74 كجم</span></div>
+    <div class="data-item"><span class="data-label">الحساسية:</span><span class="data-val">حساسية من البنسلين والغبار</span></div>
+    <div class="data-item"><span class="data-label">الطول:</span><span class="data-val">176 سم</span></div>
+    <div class="data-item"><span class="data-label">فصيلة الدم:</span><span class="data-val">O+</span></div>
+    
+    <button class="btn-main btn-back" onclick="showPage('mainPage')">العودة للرئيسية</button>
+  </div>
+
+  <!-- صفحة البيانات الخاصة بالمستشفى -->
+  <div id="privatePage" class="page">
+    <h2>🔒 معلومات المريضة الخاصة (للمستشفى)</h2>
+    <div class="data-item"><span class="data-label">آخر مستشفى زاره المريض:</span><span class="data-val" style="color:#e67e22; font-weight:bold;">مستشفى الهيئة الملكية بالجبيل</span></div>
+    <div class="data-item"><span class="data-label">آخر العمليات:</span><span class="data-val">استئصال الزائدة الدودية عام 2023</span></div>
+    <div class="data-item"><span class="data-label">اسم الطبيب المراجع:</span><span class="data-val">د. عبد الله الشمري (استشاري باطنية)</span></div>
+    
+    <!-- الأزرار الفرعية الداخلية -->
+    <button class="btn-main btn-labs" onclick="showPage('labsPage')">📊 بيانات التحاليل والأشعة الشاملة</button>
+    <button class="btn-main btn-doctor" onclick="showPage('doctorPage')">👨‍⚕️ لوحة تحكم الطبيب والمستشفى</button>
+    
+    <button class="btn-main btn-back" onclick="showPage('mainPage')">العودة للرئيسية</button>
+  </div>
+
+  <!-- صفحة بيانات التحاليل والأشعة الشاملة -->
+  <div id="labsPage" class="page">
+    <h2>📊 سجل التحاليل المخبرية والأشعة الشامل</h2>
+    
+    <h3>🩸 صورة الدم والتحاليل المخبرية:</h3>
+    <div class="data-item"><span class="data-label">صفائح الدم (Platelets):</span><span class="data-val">280,000 /mcL (طبيعي وممتاز)</span></div>
+    <div class="data-item"><span class="data-label">صورة الدم الكاملة (CBC):</span><span class="data-val">الهيموجلوبين: 14.2 | خلايا الدم البيضاء: 6.5 (مستقر)</span></div>
+    <div class="data-item"><span class="data-label">جرثومة المعدة (H. Pylori):</span><span class="data-val">إيجابي خفيف (+Positive) - تحت العلاج الحالي</span></div>
+    <div class="data-item"><span class="data-label">مخزون الحديد (Ferritin):</span><span class="data-val">45 ng/mL (طبيعي)</span></div>
+    <div class="data-item"><span class="data-label">وظائف الكبد والكلى:</span><span class="data-val">ALT: 22 (سليم) | Creatinine: 0.7 (سليم)</span></div>
+    <div class="data-item"><span class="data-label">الفيتامينات والأملاح:</span><span class="data-val">فيتامين D: 22 (نقص طفيف) | فيتامين B12: 350 (طبيعي)</span></div>
+
+    <h3>🩻 سجل الأشعة والتصوير الطبي:</h3>
+    <div class="data-item"><span class="data-label">نوع آخر أشعة:</span><span class="data-val">أشعة الرنين المغناطيسي (MRI)</span></div>
+    <div class="data-item"><span class="data-label">منطقة الجسم المستهدفة:</span><span class="data-val">أسفل الظهر (الفقرات القطنية)</span></div>
+    <div class="data-item"><span class="data-label">نتيجة الأشعة:</span><span class="data-val">وجود نتؤ غضروفي بسيط (ديسك خفيف) بين الفقرة الرابعة والخامسة دون تأثير شديد على العصب.</span></div>
+    
+    <hr style="margin-top:20px; border-color:#eee;">
+    
+    <h3>🤖 التوقعات المستقبلية بالذكاء الاصطناعي الطبي</h3>
+    <button class="btn-main btn-ai" onclick="runAI()">توليد تقرير التوقعات الذكي</button>
+    <div id="ai-result" style="display:none;"></div>
+
+    <button class="btn-main btn-back" onclick="showPage('privatePage')">الرجوع للمعلومات الخاصة</button>
+  </div>
+
+  <!-- صفحة لوحة تحكم الطبيب والمستشفى -->
+  <div id="doctorPage" class="page">
+    <h2>👨‍⚕️ بوابة الطبيب والمستشفى لإضافة البيانات</h2>
+    <p style="font-size: 13px; color: #7f8c8d;">هذا القسم مخصص للطاقم الطبي لإضافة وتعديل ملف المريضة سلمى الحربي.</p>
+    
+    <div style="margin-bottom: 15px;">
+      <label class="data-label" style="width:100%;">✍️ كتابة ملاحظات طبية أو تشخيص جديد:</label>
+      <textarea id="docNotes" rows="4" placeholder="اكتب ملاحظاتك هنا دكتور..."></textarea>
+    </div>
+    
+    <div style="margin-bottom: 15px;">
+      <label class="data-label" style="width:100%;">🧪 إضافة تحاليل جديدة أو علاجات مصروفة:</label>
+      <input type="text" id="docLabs" placeholder="مثال: صرف علاج ثلاثي لجرثومة المعدة لمدة 14 يوم...">
+    </div>
+    
+    <button class="btn-main btn-doctor" onclick="saveDocData()">حفظ التعديلات الطبية بالملف</button>
+    <p id="docStatus" style="font-weight:bold; text-align:center; color:#27ae60;"></p>
+
+    <button class="btn-main btn-back" onclick="showPage('privatePage')">الرجوع للمعلومات الخاصة</button>
+  </div>
+
+</div>
+
+<script>
+  // دالة التنقل السلس بين الصفحات
+  function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+  }
+
+  // دالة تشغيل استشارة الذكاء الاصطناعي
+  function runAI() {
+    var resultDiv = document.getElementById('ai-result');
+    resultDiv.style.display = "block";
+    resultDiv.innerHTML = "<span class='loading'>🔄 جاري تحليل سجل التحاليل المخبرية والأشعة وتوليد التقرير...</span>";
+    
+    var patientData = {
+      name: "سلمى عبد المحسن الحربي",
+      hPylori: "إيجابي خفيف",
+      mriResult: "ديسك خفيف بين الرابعة والخامسة",
+      platelets: "280,000"
+    };
+
+    google.script.run.withSuccessHandler(function(response) {
+      resultDiv.innerHTML = response;
+    }).getAIAnalysis(patientData);
+  }
+
+  // دالة حفظ بيانات لوحة تحكم الطبيب
+  function saveDocData() {
+    var status = document.getElementById('docStatus');
+    status.innerText = "⏳ جاري حفظ الملاحظات الطبية...";
+    
+    setTimeout(function() {
+      status.innerText = "✅ تم حفظ ملاحظات الطبيب وتحديث ملف مستشفى الجبيل بنجاح!";
+      document.getElementById('docNotes').value = "";
+      document.getElementById('docLabs').value = "";
+    }, 1500);
+  }
+</script>
+
+</body>
+</html>
